@@ -2,59 +2,84 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { async } from "q";
+import { promises } from "dns";
 
 const App: React.FC = () => {
   return (
     <Router>
       {/* <Route exact path="/" component={Home} /> */}
-      <Route path="/" component={SignUp} />
+      <Route path="/" component={Tweeter} />
     </Router>
   );
 };
 
-class SignUp extends React.Component<
-  any,
-  { username: string; password: string }
-> {
+class Tweeter extends React.Component<any, { title: string; post: string }> {
   constructor(props: any) {
     super(props);
     this.state = {
-      username: "",
-      password: ""
+      title: "",
+      post: "",
+      data
     };
   }
+  componentDidMount() {
+    fetch("https://tweeter.azurewebsites.net/index.html")
+      .then(response => response.json())
+      .then(response => this.setState({
+        text
+      }));
+  }
 
-  // Scaffold-DbContext "Server=tcp:nzmsap2.database.windows.net,1433;Initial Catalog=Tweeter;Persist Security Info=False;User ID=Kobe;Password=P@ssw0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer - OutputDir Model - DataAnnotations
-
+  handleSubmit(e: any) {
+    e.preventDefault();
+  }
   render() {
     return (
       <div>
-        <h1>Sign Up</h1>
-        <input
-          type="text"
-          placeholder="User name"
-          name="username"
-          value={this.state.username}
-          onChange={event => {
-            this.setState({ username: event.target.value });
-          }}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          name="password"
-          value={this.state.password}
-          onChange={event => {
-            this.setState({ password: event.target.value });
-          }}
-        />
-        <button
-          onClick={event => {
-            console.log(event);
-          }}
-        >
-          go
-        </button>
+        <h1>Tweeter</h1>
+        <form onSubmit={e => this.handleSubmit(e)} action="">
+          <input
+            type="text"
+            placeholder="Title"
+            name="title"
+            value={this.state.title}
+            onChange={event => {
+              this.setState({ title: event.target.value });
+            }}
+          />
+          <input
+            type="text"
+            placeholder="post"
+            name="post"
+            value={this.state.post}
+            onChange={event => {
+              this.setState({ post: event.target.value });
+            }}
+          />
+          <button
+            onClick={event => {
+              console.log(event);
+            }}
+          >
+            post
+          </button>
+        </form>
+
+        <form>
+          <div>
+            <textarea name="data" 
+            onChange={event => {
+              this.setState({ post: event.target.value });
+            }}
+            />
+          </div>
+          <button
+            onClick={event => {
+              console.log(event);
+            }}
+          />
+        </form>
       </div>
     );
   }
