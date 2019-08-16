@@ -81,4 +81,18 @@ const Home: React.FC = () => {
   );
 };
 
+class HomePage extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      title: "",
+      post: "",
+      isFavourite: false
+    };
+  }
+  render() {
+    return <div />;
+  }
+}
+
 export default App;
