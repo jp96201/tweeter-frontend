@@ -6,8 +6,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 const App: React.FC = () => {
   return (
     <Router>
-      <Route exact path="/" component={Home} />
-      <Route path="/signup" component={SignUp} />
+      {/* <Route exact path="/" component={Home} /> */}
+      <Route path="/" component={SignUp} />
     </Router>
   );
 };
